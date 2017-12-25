@@ -335,7 +335,8 @@ RSpec.describe Tomograph::Tomogram do
           :responses => [{"status" => "200", "body" => json_schema}],
           :resource => "/recommendation",
           :group_title => "Microservice",
-          :resource_title => "Recommendation"
+          :resource_title => "Recommendation",
+          :action_title => "To viewing"
         }
       ]
     end
