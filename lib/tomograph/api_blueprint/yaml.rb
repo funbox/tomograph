@@ -32,7 +32,8 @@ module Tomograph
             result_resources.push(
               'resource' => resource,
               'resource_path' => resource_path(resource),
-              'group_title' => group['meta']['title']
+              'group_title' => group['meta']['title'],
+              'resource_title' => resource['meta']['title']
             )
           end)
         end.flatten
@@ -64,7 +65,8 @@ module Tomograph
           'transition' => transition,
           'transition_path' => transition_path(transition, resource['resource_path']),
           'resource' => resource['resource_path'],
-          'group_title' => resource['group_title']
+          'group_title' => resource['group_title'],
+          'resource_title' => resource['resource_title']
         }
       end
 
@@ -80,7 +82,8 @@ module Tomograph
                                    content['content'],
                                    transition['transition_path'],
                                    transition['resource'],
-                                   transition['group_title']
+                                   transition['group_title'],
+                                   transition['resource_title']
             ))
           end)
         end
@@ -105,7 +108,8 @@ module Tomograph
           request: related_actions.first.request,
           responses: related_actions.map(&:responses).flatten,
           resource: related_actions.first.resource,
-          group_title: related_actions.first.group_title
+          group_title: related_actions.first.group_title,
+          resource_title: related_actions.first.resource_title
         }
       end
 
