@@ -29,7 +29,11 @@ module Tomograph
         @resources ||= groups.inject([]) do |result_groups, group|
           result_groups.push(group['content'].inject([]) do |result_resources, resource|
             next result_resources unless resource?(resource)
-            result_resources.push('resource' => resource, 'resource_path' => resource_path(resource))
+            result_resources.push(
+              'resource' => resource,
+              'resource_path' => resource_path(resource),
+              'group_title' => group['meta']['title']
+            )
           end)
         end.flatten
       end
@@ -59,7 +63,8 @@ module Tomograph
         {
           'transition' => transition,
           'transition_path' => transition_path(transition, resource['resource_path']),
-          'resource' => resource['resource_path']
+          'resource' => resource['resource_path'],
+          'group_title' => resource['group_title']
         }
       end
 
@@ -74,7 +79,8 @@ module Tomograph
             result_contents.push(Tomograph::ApiBlueprint::Yaml::Action.new(
                                    content['content'],
                                    transition['transition_path'],
-                                   transition['resource']
+                                   transition['resource'],
+                                   transition['group_title']
             ))
           end)
         end
@@ -98,7 +104,8 @@ module Tomograph
           method: related_actions.first.method,
           request: related_actions.first.request,
           responses: related_actions.map(&:responses).flatten,
-          resource: related_actions.first.resource
+          resource: related_actions.first.resource,
+          group_title: related_actions.first.group_title
         }
       end
 
@@ -118,6 +125,10 @@ module Tomograph
           end
           res.merge(related_actions[1].first[:resource] => requests)
         end
+      end
+
+      def to_actions
+        actions
       end
     end
   end

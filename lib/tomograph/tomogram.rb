@@ -29,6 +29,10 @@ module Tomograph
       @documentation.to_resources
     end
 
+    def to_actions
+      @documentation.to_actions
+    end
+
     def prefix_match?(raw_path)
       raw_path.include?(@prefix)
     end

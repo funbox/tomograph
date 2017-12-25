@@ -315,6 +315,44 @@ RSpec.describe Tomograph::Tomogram do
     end
   end
 
+  describe '#to_actions' do
+    subject { described_class.new(drafter_yaml_path: documentation, prefix: '').to_actions }
+
+    let(:json_schema) do
+      {
+        "$schema" => "http://json-schema.org/draft-04/schema#",
+        "type" => "object",
+        "properties" => {"tv_series" => {"type" => "string"}},
+        "required" => ["tv_series"]
+      }
+    end
+    let(:parsed) do
+      [
+        {
+          :path => "/recommendation",
+          :method => "GET",
+          :request => {},
+          :responses => [{"status" => "200", "body" => json_schema}],
+          :resource => "/recommendation",
+          :group_title => "Microservice"
+        }
+      ]
+    end
+    let(:documentation) { nil }
+
+    before do
+      allow(Rails).to receive(:root).and_return("#{ENV['RBENV_DIR']}/spec/fixtures")
+    end
+
+    context 'if one action' do
+      let(:documentation) { 'grouped_with_all.yaml' }
+
+      it 'parses documents' do
+        expect(subject).to eq(parsed)
+      end
+    end
+  end
+
   describe '#prefix_match?' do
     subject { described_class.new(prefix: '/api/v2') }
     before { allow(Tomograph::ApiBlueprint::Yaml).to receive(:new) }
