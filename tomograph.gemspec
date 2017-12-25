@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.4', '>= 3.4.0'
   spec.add_development_dependency 'simplecov', '~> 0.11', '>= 0.11.2'
   spec.add_development_dependency 'rubocop', '~> 0.43', '>= 0.43.0'
+  spec.add_development_dependency 'rb-readline', '~> 0.4', '>= 0.4.0'
 end
