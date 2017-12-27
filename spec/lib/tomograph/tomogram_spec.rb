@@ -326,28 +326,94 @@ RSpec.describe Tomograph::Tomogram do
         "required" => ["tv_series"]
       }
     end
-    let(:parsed) do
-      [
-        {
-          :path => "/recommendation",
-          :method => "GET",
-          :request => {},
-          :responses => [{"status" => "200", "body" => json_schema}],
-          :resource => "/recommendation",
-          :group_title => "Microservice",
-          :resource_title => "Recommendation",
-          :action_title => "To viewing"
-        }
-      ]
-    end
     let(:documentation) { nil }
 
     before do
       allow(Rails).to receive(:root).and_return("#{ENV['RBENV_DIR']}/spec/fixtures")
     end
 
-    context 'if one action' do
+    context 'grouped with all' do
       let(:documentation) { 'grouped_with_all.yaml' }
+      let(:parsed) do
+        [
+          {
+            :path => "/recommendation",
+            :method => "GET",
+            :request => {},
+            :responses => [{"status" => "200", "body" => json_schema}],
+            :resource => "/recommendation",
+            :group_title => "Microservice",
+            :resource_title => "Recommendation",
+            :action_title => "To viewing"
+          }
+        ]
+      end
+
+      it 'parses documents' do
+        expect(subject).to eq(parsed)
+      end
+    end
+
+    context 'grouped without all' do
+      let(:documentation) { 'grouped_without_group.yaml' }
+      let(:parsed) do
+        [
+          {
+            :path => "/recommendation",
+            :method => "GET",
+            :request => {},
+            :responses => [{"status" => "200", "body" => json_schema}],
+            :resource => "/recommendation",
+            :group_title => "",
+            :resource_title => "Recommendation",
+            :action_title => "To viewing"
+          }
+        ]
+      end
+
+      it 'parses documents' do
+        expect(subject).to eq(parsed)
+      end
+    end
+
+    context 'grouped without resource' do
+      let(:documentation) { 'grouped_without_resource.yaml' }
+      let(:parsed) do
+        [
+          {
+            :path => "/recommendation",
+            :method => "GET",
+            :request => {},
+            :responses => [{"status" => "200", "body" => json_schema}],
+            :resource => "/recommendation",
+            :group_title => "Microservice",
+            :resource_title => "To viewing",
+            :action_title => "To viewing"
+          }
+        ]
+      end
+
+      it 'parses documents' do
+        expect(subject).to eq(parsed)
+      end
+    end
+
+    context 'grouped without all' do
+      let(:documentation) { 'grouped_without_all.yaml' }
+      let(:parsed) do
+        [
+          {
+            :path => "/recommendation",
+            :method => "GET",
+            :request => {},
+            :responses => [{"status" => "200", "body" => json_schema}],
+            :resource => "/recommendation",
+            :group_title => "",
+            :resource_title => "To viewing",
+            :action_title => "To viewing"
+          }
+        ]
+      end
 
       it 'parses documents' do
         expect(subject).to eq(parsed)

@@ -7,7 +7,16 @@ RSpec.describe Tomograph::Tomogram::Action do
     let(:responses) { [{ 'status' => status }] }
 
     subject do
-      described_class.new(path: '', method: '', request: '', responses: responses, resource: '')
+      described_class.new(
+        path: '',
+        method: '',
+        request: '',
+        responses: responses,
+        resource: '',
+        group_title: '',
+        resource_title: '',
+        action_title: ''
+      )
     end
 
     it 'returns responses' do

@@ -5,7 +5,7 @@ module Tomograph
     class Action
       attr_reader :path, :method, :request, :responses
 
-      def initialize(path:, method:, request:, responses:, resource:)
+      def initialize(path:, method:, request:, responses:, resource:, group_title:, resource_title:, action_title:)
         @path ||= Tomograph::Path.new(path)
         @method ||= method
         @request ||= request
